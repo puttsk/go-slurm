@@ -38,7 +38,7 @@ type QOSRecord struct {
 	Description        string //char *description;
 	ID                 uint32 //uint32_t id;
 	Flags              uint32 //uint32_t flags; /* flags for various things to enforce or override other limits */
-	GraceTime          uint32 //uint32_t grace_time; /* preemption grace time */
+	GraceTime          uint32 //uint32_t grace_time; /* preemption grace time in seconds*/
 	GrpJobsAccrue      uint32 //uint32_t    grp_jobs_accrue /* max number of jobs this qos can have accruing priority time */
 	GrpJobs            uint32 //uint32_t grp_jobs /* max number of jobs this qos can run at one time */
 	GrpSubmitJobs      uint32 //uint32_t grp_submit_jobs /* max number of jobs this qos can submit at one time */
@@ -72,7 +72,7 @@ type QOSRecord struct {
 	MaxTRESRunMinsPU     string  //char     *max_tres_run_mins_pu /* max number of tres minutes this qos can having running at one time, currently this doesn't do anything.*/
 	MaxTRESRunMinsPUCtld uint64  //uint64_t *max_tres_run_mins_pu_ctld /* max_tres_run_mins_pu broken out in an array based off the ordering of the total number of TRES in the system, currently this doesn't do anything. (DON'T PACK) */
 	MaxWallPJ            uint32  //uint32_t max_wall_pj /* longest time this qos can run a job */
-	MaxPrioThresh        uint32  //uint32_t min_prio_thresh /* Don't reserve resources for pending jobs unless they have a priority equal to or higher than this. */
+	MinPrioThresh        uint32  //uint32_t min_prio_thresh /* Don't reserve resources for pending jobs unless they have a priority equal to or higher than this. */
 	MinTRESPJ            string  //char     *min_tres_pj /* min number of tres a job can allocate with this qos */
 	MinTRESPJCtld        uint64  //uint64_t *min_tres_pj_ctld /* min_tres_pj broken out in an array based off the ordering of the total number of TRES in the system (DON'T PACK) */
 
@@ -83,7 +83,7 @@ type QOSRecord struct {
 	PreemptExemptTime uint32   //uint32_t      preempt_exempt_time /* Job run time before becoming eligible for preemption */
 	Priority          uint32   //uint32_t priority /* ranged int needs to be a unint for heterogeneous systems */
 	// Usage //slurmdb_qos_usage_t *usage       /* For internal use only, DON'T PACK */
-	// UsageFactor float64 //double              usage_factor /* factor to apply to usage in this qos */
-	// UsageThres  float64 //double              usage_thres  /* percent of effective usage of an association when breached will deny pending and new jobs */
+	UsageFactor float64 //double  usage_factor /* factor to apply to usage in this qos */
+	// UsageThres  float64 //double  usage_thres  /* percent of effective usage of an association when breached will deny pending and new jobs */
 	// BlockUntil uint64 time_t blocked_until /* internal use only, DON'T PACK  */
 }

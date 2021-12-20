@@ -30,6 +30,28 @@ func TestListUser(t *testing.T) {
 	}
 }
 
+func TestListQOS(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	m := mocks.NewMockSacctMgrCLIHander(ctrl)
+	m.EXPECT().ListQOS().Return(sacctmgrQOSOutput, nil)
+
+	cli.SetSacctmgrHander(m)
+
+	q, err := cli.ListQOS()
+	if err != nil {
+		t.Error(err)
+	}
+	t.Logf("%+v\n", q)
+
+	qosCount := len(strings.Split(strings.TrimSpace(sacctmgrQOSOutput), "\n")) - 1
+
+	if len(q) != qosCount {
+		t.Errorf("Invalid number of QoS. Expect: %d, Actual: %d", qosCount, len(q))
+	}
+}
+
 const sacctmgrUserOutput = `Admin|Coord Accounts|Def Acct|Def WCKey|User
 None||pre5006||aapai
 None||trial0003||aaroonsr

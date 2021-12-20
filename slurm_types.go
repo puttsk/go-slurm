@@ -30,21 +30,21 @@ const (
 //Define QOS flags
 //slurm.h: 123
 const (
-	QOSFlagBase   uint64 = 0x0fffffff //#define	QOS_FLAG_BASE                0x0fffffff
-	QOSFlagNotset uint64 = 0x10000000 //#define	QOS_FLAG_NOTSET              0x10000000
-	QOSFlagAdd    uint64 = 0x20000000 //#define	QOS_FLAG_ADD                 0x20000000
-	QOSFlagRemove uint64 = 0x40000000 //#define	QOS_FLAG_REMOVE              0x40000000
+	QOSFlagBase   uint32 = 0x0fffffff //#define	QOS_FLAG_BASE                0x0fffffff
+	QOSFlagNotset uint32 = 0x10000000 //#define	QOS_FLAG_NOTSET              0x10000000
+	QOSFlagAdd    uint32 = 0x20000000 //#define	QOS_FLAG_ADD                 0x20000000
+	QOSFlagRemove uint32 = 0x40000000 //#define	QOS_FLAG_REMOVE              0x40000000
 
-	QOSFlagPartMinNode      uint64 = uint64(1) << 0 //#define	QOS_FLAG_PART_MIN_NODE       SLURM_BIT(0)
-	QOSFlagPartMaxNode      uint64 = uint64(1) << 1 // #define	QOS_FLAG_PART_MAX_NODE       SLURM_BIT(1)
-	QOSFlagPartTimeLimit    uint64 = uint64(1) << 2 //#define	QOS_FLAG_PART_TIME_LIMIT     SLURM_BIT(2)
-	QOSFlagEnforceUsageTRES uint64 = uint64(1) << 3 //#define	QOS_FLAG_ENFORCE_USAGE_THRES SLURM_BIT(3)
-	QOSFlagNoReserve        uint64 = uint64(1) << 4 // #define	QOS_FLAG_NO_RESERVE          SLURM_BIT(4)
-	QOSFlagReqResv          uint64 = uint64(1) << 5 //#define	QOS_FLAG_REQ_RESV            SLURM_BIT(5)
-	QOSFlagDenyLimit        uint64 = uint64(1) << 6 //#define	QOS_FLAG_DENY_LIMIT          SLURM_BIT(6)
-	QOSFlagOverPartQOS      uint64 = uint64(1) << 7 // #define	QOS_FLAG_OVER_PART_QOS       SLURM_BIT(7)
-	QOSFlagNoDecay          uint64 = uint64(1) << 8 // #define	QOS_FLAG_NO_DECAY            SLURM_BIT(8)
-	QOSFlagUsageFactorSafe  uint64 = uint64(1) << 9 // #define	QOS_FLAG_USAGE_FACTOR_SAFE   SLURM_BIT(9)
+	QOSFlagPartMinNode      uint32 = uint32(1) << 0 //#define	QOS_FLAG_PART_MIN_NODE       SLURM_BIT(0)
+	QOSFlagPartMaxNode      uint32 = uint32(1) << 1 // #define	QOS_FLAG_PART_MAX_NODE       SLURM_BIT(1)
+	QOSFlagPartTimeLimit    uint32 = uint32(1) << 2 //#define	QOS_FLAG_PART_TIME_LIMIT     SLURM_BIT(2)
+	QOSFlagEnforceUsageTRES uint32 = uint32(1) << 3 //#define	QOS_FLAG_ENFORCE_USAGE_THRES SLURM_BIT(3)
+	QOSFlagNoReserve        uint32 = uint32(1) << 4 // #define	QOS_FLAG_NO_RESERVE          SLURM_BIT(4)
+	QOSFlagReqResv          uint32 = uint32(1) << 5 //#define	QOS_FLAG_REQ_RESV            SLURM_BIT(5)
+	QOSFlagDenyLimit        uint32 = uint32(1) << 6 //#define	QOS_FLAG_DENY_LIMIT          SLURM_BIT(6)
+	QOSFlagOverPartQOS      uint32 = uint32(1) << 7 // #define	QOS_FLAG_OVER_PART_QOS       SLURM_BIT(7)
+	QOSFlagNoDecay          uint32 = uint32(1) << 8 // #define	QOS_FLAG_NO_DECAY            SLURM_BIT(8)
+	QOSFlagUsageFactorSafe  uint32 = uint32(1) << 9 // #define	QOS_FLAG_USAGE_FACTOR_SAFE   SLURM_BIT(9)
 )
 
 //#define SLURM_BIT(offset) ((uint64_t)1 << offset)
