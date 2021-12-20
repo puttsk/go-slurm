@@ -9,6 +9,14 @@ import (
 
 const SlurmDelimiter string = "|"
 
+// Set default sacctmgr hander to `SacctMgrCLI`
+var sacctmgrHander SacctMgrCLIHander = new(SacctMgrCLI)
+
+// SetSacctmgrHander: set default handler for sacctmgr function
+func SetSacctmgrHander(s SacctMgrCLIHander) {
+	sacctmgrHander = s
+}
+
 func parseUserList(s string) ([]slurm.UserRecord, error) {
 	// Assume sacctmgr comes with headers
 	// Parse sacctmgr show user output and return a list of UserRecords
@@ -50,8 +58,8 @@ func parseUserList(s string) ([]slurm.UserRecord, error) {
 	return ulist, nil
 }
 
-func ListUser(s SacctMgrCLIHander) ([]slurm.UserRecord, error) {
-	output, err := s.ListUser()
+func ListUser() ([]slurm.UserRecord, error) {
+	output, err := sacctmgrHander.ListUser()
 	if err != nil {
 		return nil, err
 	}

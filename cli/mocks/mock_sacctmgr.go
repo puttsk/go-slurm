@@ -33,6 +33,21 @@ func (m *MockSacctMgrCLIHander) EXPECT() *MockSacctMgrCLIHanderMockRecorder {
 	return m.recorder
 }
 
+// ListQOS mocks base method.
+func (m *MockSacctMgrCLIHander) ListQOS() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListQOS")
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListQOS indicates an expected call of ListQOS.
+func (mr *MockSacctMgrCLIHanderMockRecorder) ListQOS() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListQOS", reflect.TypeOf((*MockSacctMgrCLIHander)(nil).ListQOS))
+}
+
 // ListUser mocks base method.
 func (m *MockSacctMgrCLIHander) ListUser() (string, error) {
 	m.ctrl.T.Helper()
