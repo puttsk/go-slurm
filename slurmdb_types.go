@@ -1,7 +1,7 @@
 package slurm
 
 // slurmdb_admin_level_t
-// slurm/slurmdb.h: 47
+// slurm/slurmdb.h:47
 const (
 	SlurmDBAdminNotset    uint16 = 0
 	SlurmDBAdminNone      uint16 = 1
@@ -17,7 +17,7 @@ const (
 )
 
 // slurmdb_user_rec
-// slurm/slurmdb.h: 879
+// slurm/slurmdb.h:879
 type UserRecord struct {
 	AdminLevel   uint16 // uint16_t admin_level;
 	DefaultAcct  string // char *default_acct;
@@ -30,6 +30,24 @@ type UserRecord struct {
 	//BFUsage 		   // slurmdb_bf_usage_t *bf_usage;
 	//CoordAccts	   // List coord_accts; /* list of slurmdb_coord_rec_t *'s */
 	//WCKeyList  //List wckey_list; /* list of slurmdb_wckey_rec_t *'s */
+}
+
+// SLURMDB_ACCT_FLAG_
+// slurm/slurmdb.h:364
+const (
+	SlurmDBAcctFlagNone    uint32 = 0
+	SlurmDBAcctFlagDeleted uint32 = uint32(1) << 0
+)
+
+// slurmdb_account_rec_t
+// slurm/slurmdb.h:369
+type AccountRecord struct {
+	AssocList    []string //List assoc_list; /* list of slurmdb_assoc_rec_t *'s */
+	Coordinators []string //List coordinators; /* list of slurmdb_coord_rec_t *'s */
+	Description  string   //char *description;
+	Flags        uint32   //uint32_t flags; /* SLURMDB_ACCT_FLAG_* */
+	Name         string   //char *name;
+	Organization string   //char *organization;
 }
 
 // slurmdb_qos_rec_t
