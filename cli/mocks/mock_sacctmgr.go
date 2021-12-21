@@ -48,6 +48,21 @@ func (mr *MockSacctMgrCLIHanderMockRecorder) ListAccount() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAccount", reflect.TypeOf((*MockSacctMgrCLIHander)(nil).ListAccount))
 }
 
+// ListAssoc mocks base method.
+func (m *MockSacctMgrCLIHander) ListAssoc() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListAssoc")
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListAssoc indicates an expected call of ListAssoc.
+func (mr *MockSacctMgrCLIHanderMockRecorder) ListAssoc() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAssoc", reflect.TypeOf((*MockSacctMgrCLIHander)(nil).ListAssoc))
+}
+
 // ListQOS mocks base method.
 func (m *MockSacctMgrCLIHander) ListQOS() (string, error) {
 	m.ctrl.T.Helper()

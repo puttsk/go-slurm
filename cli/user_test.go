@@ -13,8 +13,10 @@ func TestListUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
+	sacctmgrOutput := sacctmgrUserOutput
+
 	m := mocks.NewMockSacctMgrCLIHander(ctrl)
-	m.EXPECT().ListUser().Return(sacctmgrUserOutput, nil)
+	m.EXPECT().ListUser().Return(sacctmgrOutput, nil)
 
 	cli.SetSacctmgrHander(m)
 
@@ -23,7 +25,7 @@ func TestListUser(t *testing.T) {
 		t.Error(err)
 	}
 
-	userCount := len(strings.Split(strings.TrimSpace(sacctmgrUserOutput), "\n")) - 1
+	userCount := len(strings.Split(strings.TrimSpace(sacctmgrOutput), "\n")) - 1
 
 	if len(u) != userCount {
 		t.Errorf("Invalid number of users. Expect: %d, Actual: %d", userCount, len(u))

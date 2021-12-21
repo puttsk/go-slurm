@@ -13,8 +13,10 @@ func TestListQOS(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
+	sacctmgrOutput := sacctmgrQOSOutput
+
 	m := mocks.NewMockSacctMgrCLIHander(ctrl)
-	m.EXPECT().ListQOS().Return(sacctmgrQOSOutput, nil)
+	m.EXPECT().ListQOS().Return(sacctmgrOutput, nil)
 
 	cli.SetSacctmgrHander(m)
 
@@ -23,7 +25,7 @@ func TestListQOS(t *testing.T) {
 		t.Error(err)
 	}
 
-	qosCount := len(strings.Split(strings.TrimSpace(sacctmgrQOSOutput), "\n")) - 1
+	qosCount := len(strings.Split(strings.TrimSpace(sacctmgrOutput), "\n")) - 1
 
 	if len(q) != qosCount {
 		t.Errorf("Invalid number of QoS. Expect: %d, Actual: %d", qosCount, len(q))

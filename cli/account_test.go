@@ -1,7 +1,6 @@
 package cli_test
 
 import (
-	"log"
 	"strings"
 	"testing"
 
@@ -14,8 +13,10 @@ func TestListAccount(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
+	sacctmgrOutput := sacctmgrAccountOutput
+
 	m := mocks.NewMockSacctMgrCLIHander(ctrl)
-	m.EXPECT().ListAccount().Return(sacctmgrAccountOutput, nil)
+	m.EXPECT().ListAccount().Return(sacctmgrOutput, nil)
 
 	cli.SetSacctmgrHander(m)
 
@@ -24,9 +25,7 @@ func TestListAccount(t *testing.T) {
 		t.Error(err)
 	}
 
-	log.Printf("%+v", a)
-
-	accountCount := len(strings.Split(strings.TrimSpace(sacctmgrAccountOutput), "\n")) - 1
+	accountCount := len(strings.Split(strings.TrimSpace(sacctmgrOutput), "\n")) - 1
 
 	if len(a) != accountCount {
 		t.Errorf("Invalid number of accounts. Expect: %d, Actual: %d", accountCount, len(a))
