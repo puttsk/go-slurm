@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/puttsk/go-slurm"
 	"github.com/puttsk/go-slurm/cli"
 	"github.com/puttsk/go-slurm/cli/mocks"
 )
@@ -29,6 +30,26 @@ func TestListQOS(t *testing.T) {
 
 	if len(q) != qosCount {
 		t.Errorf("Invalid number of QoS. Expect: %d, Actual: %d", qosCount, len(q))
+	}
+
+	if q[3].Name != "proj0102" {
+		t.Errorf("Invalid qos name parsing. Expect %s, Actual %s", "proj0102", q[3].Name)
+	}
+
+	if q[5].GraceTime != 0 {
+		t.Errorf("Invalid qos grace time parsing. Expect %d, Actual %d", 0, q[5].GraceTime)
+	}
+
+	if q[10].GrpTRESMins != "billing=22222222" {
+		t.Errorf("Invalid qos GrpTRESMins parsing. Expect %s, Actual %s", "billing=22222222", q[10].GrpTRESMins)
+	}
+
+	if q[11].GrpJobs != slurm.Infinite {
+		t.Errorf("Invalid qos GrpJobs parsing. Expect 0x%d, Actual 0x%d", slurm.Infinite, q[11].GrpJobs)
+	}
+
+	if (q[15].Flags & slurm.QOSFlagNoDecay) == 0 {
+		t.Errorf("Invalid qos flags parsing. Expect %X, Actual %X", slurm.QOSFlagNoDecay, q[15].Flags)
 	}
 }
 

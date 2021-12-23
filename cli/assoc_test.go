@@ -30,6 +30,14 @@ func TestListAssoc(t *testing.T) {
 	if len(a) != assocCount {
 		t.Errorf("Invalid number of accounts. Expect: %d, Actual: %d", assocCount, len(a))
 	}
+
+	if a[3].User != "jsuwanim" {
+		t.Errorf("Invalid assoc name parsing. Expect %s, Actual %s", "jsuwanim", a[3].User)
+	}
+
+	if a[10].Acct != "pre0001" {
+		t.Errorf("Invalid assoc account parsing. Expect %s, Actual %s", "pre0001", a[10].Acct)
+	}
 }
 
 const sacctmgrAssocOutput = `ID|User|Account|Cluster|Def QOS|Share|GrpTRESMins|GrpTRESRunMins|GrpTRES|GrpJobs|GrpJobsAccrue|GrpSubmit|GrpWall|MaxTRES|MaxTRESMins|MaxTRESPerNode|MaxJobs|MaxJobsAccrue|MaxSubmit|MaxWall|QOS|QOS_RAW|Par ID|Par Name|Partition|Priority|LFT|RGT
