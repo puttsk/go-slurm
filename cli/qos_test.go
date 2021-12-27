@@ -10,6 +10,45 @@ import (
 	"github.com/puttsk/go-slurm/cli/mocks"
 )
 
+func TestGenerateQOSParams(t *testing.T) {
+	type QOSTest struct {
+		q      slurm.QOSRecord
+		expect string
+	}
+
+	var q1 slurm.QOSRecord
+	q1.Init()
+	q1.Description = "test001"
+	q1.Flags = slurm.QOSFlagNoDecay
+
+	var q2 slurm.QOSRecord
+	q2.Init()
+	q2.Description = "test002"
+	q2.Flags = slurm.QOSFlagNoReserve | slurm.QOSFlagPartMaxNode | slurm.QOSFlagNoDecay
+	q2.GraceTime = slurm.Infinite
+
+	testcases := []QOSTest{
+		{
+			q:      q1,
+			expect: "Description=test001 Flags=NoDecay",
+		},
+		{
+			q:      q2,
+			expect: "Description=test002 Flags=NoDecay,NoReserve,PartitionMaxNodes GraceTime=-1",
+		},
+	}
+
+	for _, c := range testcases {
+		actual, err := cli.GenerateQOSCmdParams(c.q)
+		if err != nil {
+			t.Error(err)
+		}
+		if actual != c.expect {
+			t.Errorf("Invalid QOS params: expected: \"%s\", actual: \"%s\"\nQOSRecord:%+v\n", c.expect, actual, c.q)
+		}
+	}
+}
+
 func TestListQOS(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
@@ -25,6 +64,8 @@ func TestListQOS(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	t.Logf("%+v\n", q)
 
 	qosCount := len(strings.Split(strings.TrimSpace(sacctmgrOutput), "\n")) - 1
 

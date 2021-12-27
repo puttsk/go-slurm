@@ -1,5 +1,9 @@
 package slurm
 
+import (
+	"log"
+)
+
 // slurmdb_admin_level_t
 // slurm/slurmdb.h:47
 const (
@@ -104,6 +108,99 @@ type QOSRecord struct {
 	UsageFactor float64 //double  usage_factor /* factor to apply to usage in this qos */
 	// UsageThres  float64 //double  usage_thres  /* percent of effective usage of an association when breached will deny pending and new jobs */
 	// BlockUntil uint64 time_t blocked_until /* internal use only, DON'T PACK  */
+
+	initialized bool //Check if QOSRecord is initalized
+}
+
+//extern void slurmdb_init_qos_rec(slurmdb_qos_rec_t *qos, bool free_it, uint32_t init_val)
+//src/common/slurmdb_defs.c
+func (q *QOSRecord) Init() {
+	q.initialized = true
+	q.Flags = QOSFlagNotset
+	q.GraceTime = NoVal
+	q.PreemptMode = NoVal16
+	q.PreemptExemptTime = NoVal
+	q.Priority = NoVal
+
+	q.GrpJobs = NoVal
+	q.GrpJobsAccrue = NoVal
+	q.GrpSubmitJobs = NoVal
+	q.GrpWall = NoVal
+
+	q.MaxJobsPA = NoVal
+	q.MaxJobsPU = NoVal
+	q.MaxJobsAccruePA = NoVal
+	q.MaxJobsAccruePU = NoVal
+	q.MinPrioThresh = NoVal
+	q.MaxSubmitJobsPA = NoVal
+	q.MaxJobsAccruePU = NoVal
+	q.MaxWallPJ = NoVal
+
+	q.UsageFactor = float64(NoVal)
+	//qos->usage_thres = (double)init_val;
+	q.LimitFactor = float64(NoVal)
+}
+
+func (q *QOSRecord) SetFlagOp(op string) {
+	if !q.initialized {
+		log.Panicf("QOSRecord is used without initialization")
+	}
+	switch op {
+	case "+":
+		q.Flags = q.Flags & ^QOSFlagRemove
+		q.Flags = q.Flags | QOSFlagAdd
+	case "-":
+		q.Flags = q.Flags & ^QOSFlagAdd
+		q.Flags = q.Flags | QOSFlagRemove
+	case "":
+		q.Flags = q.Flags & ^QOSFlagRemove
+		q.Flags = q.Flags & ^QOSFlagAdd
+	default:
+		log.Panicf("Unknown operation: %s", op)
+	}
+}
+
+func (q QOSRecord) GetFlagOp() string {
+	if !q.initialized {
+		log.Panicf("QOSRecord is used without initialization")
+	}
+	if (q.Flags & QOSFlagAdd) > 0 {
+		return "+"
+	}
+	if (q.Flags & QOSFlagRemove) > 0 {
+		return "-"
+	}
+	return ""
+}
+
+func (q QOSRecord) GetFlag(flag string) bool {
+	if !q.initialized {
+		log.Panicf("QOSRecord is used without initialization")
+	}
+
+	switch flag {
+	case "DenyOnLimit":
+		return (q.Flags & QOSFlagDenyLimit) > 0
+	case "EnforceUsageThreshold":
+		return (q.Flags & QOSFlagEnforceUsageTRES) > 0
+	case "NoDecay":
+		return (q.Flags & QOSFlagNoDecay) > 0
+	case "NoReserve":
+		return (q.Flags & QOSFlagNoReserve) > 0
+	case "PartitionMaxNodes":
+		return (q.Flags & QOSFlagPartMaxNode) > 0
+	case "PartitionMinNodes":
+		return (q.Flags & QOSFlagPartMinNode) > 0
+	case "OverPartQOS":
+		return (q.Flags & QOSFlagOverPartQOS) > 0
+	case "PartitionTimeLimit":
+		return (q.Flags & QOSFlagPartTimeLimit) > 0
+	case "RequiresReservation":
+		return (q.Flags & QOSFlagReqResv) > 0
+	case "UsageFactorSafe":
+		return (q.Flags & QOSFlagUsageFactorSafe) > 0
+	}
+	return false
 }
 
 // #define SLURMDB_FS_USE_PARENT 0x7FFFFFFF

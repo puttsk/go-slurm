@@ -47,6 +47,10 @@ func (s SacctMgrCLI) ListQOS() (string, error) {
 		"show qos format=ID,Name,Description,GraceTime,GrpTRESMins,GrpTRESRunMins,GrpTRES,GrpJobs,GrpJobsAccrue,GrpSubmitJobs,GrpWall,MaxTRESMinsPerJob,MaxTRESPerAccount,MaxTRESPerJob,MaxTRESPerNode,MaxTRESPerUser,MaxJobsPerAccount,MaxJobsAccruePerAccount,MaxJobsPerUser,MaxJobsAccruePerUser,MaxSubmitJobsPerAccount,MaxSubmitJobsPerUser,MaxWallDurationPerJob,MinPrioThreshold,MinTRESPerJob,Preempt,PreemptExemptTime,PreemptMode,Priority,UsageFactor,Flags")
 }
 
+func (s SacctMgrCLI) CreateQOS() error {
+	return nil
+}
+
 func (s SacctMgrCLI) ListAccount() (string, error) {
 	return s.executeCommand(SacctMgr,
 		"-noheader",
