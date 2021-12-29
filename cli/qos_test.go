@@ -27,6 +27,14 @@ func TestGenerateQOSParams(t *testing.T) {
 	q2.Flags = slurm.QOSFlagNoReserve | slurm.QOSFlagPartMaxNode | slurm.QOSFlagNoDecay
 	q2.GraceTime = slurm.Infinite
 
+	var q3 slurm.QOSRecord
+	q3.Init()
+	q3.Description = "test003"
+	q3.Flags = slurm.QOSFlagNoDecay
+	q3.MaxJobsAccruePA = 100
+	q3.MaxSubmitJobsPA = 1000
+	q3.GrpTRESMins = "billing=1000000"
+
 	testcases := []QOSTest{
 		{
 			q:      q1,
@@ -35,6 +43,10 @@ func TestGenerateQOSParams(t *testing.T) {
 		{
 			q:      q2,
 			expect: "Description=test002 Flags=NoDecay,NoReserve,PartitionMaxNodes GraceTime=-1",
+		},
+		{
+			q:      q3,
+			expect: "Description=test003 Flags=NoDecay GrpTRESMins=billing=1000000 MaxJobsAccruePerAccount=1000 MaxSubmitJobsPerAccount=1000",
 		},
 	}
 
