@@ -133,7 +133,7 @@ func (q *QOSRecord) Init() {
 	q.MaxJobsAccruePU = NoVal
 	q.MinPrioThresh = NoVal
 	q.MaxSubmitJobsPA = NoVal
-	q.MaxJobsAccruePU = NoVal
+	q.MaxSubmitJobsPU = NoVal
 	q.MaxWallPJ = NoVal
 
 	q.UsageFactor = float64(NoVal)
